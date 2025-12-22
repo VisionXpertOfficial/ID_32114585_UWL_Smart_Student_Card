@@ -1,0 +1,53 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Gateway: Run (8089)",
+      "type": "shell",
+      "command": "node server.js",
+      "options": { "cwd": "${env:HOME}/ai-blockchain-id/gateway_server" },
+      "problemMatcher": []
+    },
+    {
+      "label": "AI: Install",
+      "type": "shell",
+      "command": "python3 -m venv .venv && . .venv/bin/activate && pip -q install -U pip && pip install -r requirements.txt",
+      "options": { "cwd": "${workspaceFolder}/ai" }
+    },
+    {
+      "label": "AI: Train",
+      "type": "shell",
+      "command": ". .venv/bin/activate && python train.py",
+      "options": { "cwd": "${workspaceFolder}/ai" }
+    },
+    {
+      "label": "AI: Run (5051)",
+      "type": "shell",
+      "command": ". .venv/bin/activate && python service.py",
+      "options": { "cwd": "${workspaceFolder}/ai" }
+    },
+    {
+      "label": "Oracle: Install",
+      "type": "shell",
+      "command": "python3 -m venv .venv && . .venv/bin/activate && pip -q install -U pip && pip install -r requirements.txt",
+      "options": { "cwd": "${workspaceFolder}/oracle" }
+    },
+    {
+      "label": "Oracle: Run (5050)",
+      "type": "shell",
+      "command": ". .venv/bin/activate && python server.py",
+      "options": { "cwd": "${workspaceFolder}/oracle" }
+    },
+    {
+      "label": "UI: Serve (5173)",
+      "type": "shell",
+      "command": "python3 -m http.server 5173 -d ui",
+      "options": { "cwd": "${workspaceFolder}" }
+    },
+    {
+      "label": "Dev: Start All",
+      "dependsOrder": "parallel",
+      "dependsOn": ["Gateway: Run (8089)", "AI: Install", "AI: Train", "AI: Run (5051)", "Oracle: Install", "Oracle: Run (5050)", "UI: Serve (5173)"]
+    }
+  ]
+}

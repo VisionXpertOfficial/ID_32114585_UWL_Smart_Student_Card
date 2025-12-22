@@ -1,0 +1,218 @@
+/* ===== Base ===== */
+:root{
+  --bg: #0f1b24;
+  --panel: #162430;
+  --text: #e9eff7;
+  --muted: #9fb0c1;
+
+  --blue: #1e66ff;
+  --green: #2fbf71;
+  --amber: #f4a300;
+  --red: #d64545;
+
+  --card-bg: #ffffff;
+  --card-text: #0b0f14;
+  --badge-bg: #f1c40f; /* neutral yellow */
+
+  /* Brand header controls */
+  --uni-size: 17px;
+  --uni-logo: 82px;
+  --uni-gap: 12px;
+}
+
+*{ box-sizing: border-box; }
+html, body{
+  height:100%; margin:0;
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.45 system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+}
+h1{ margin:0 0 20px; font-size:34px; font-weight:800; }
+h2{ margin:0 0 12px; font-size:20px; font-weight:700; }
+.page{ max-width:1400px; margin:34px auto; padding:0 18px; }
+.grid{ display:grid; grid-template-columns:1.5fr 1fr; gap:28px; }
+.panel{
+  background: var(--panel);
+  padding:18px; border-radius:10px;
+  box-shadow: 0 1px 0 rgba(0,0,0,.15) inset, 0 8px 24px rgba(0,0,0,.25);
+}
+
+/* ===== Form ===== */
+.form-row{ display:flex; flex-direction:column; gap:8px; margin-bottom:14px; }
+label{ color:var(--muted); font-size:13px; }
+input, textarea{
+  background:#0f1a23; color:var(--text);
+  border:1px solid #203041; border-radius:8px;
+  padding:10px 12px; outline:none;
+}
+input:focus, textarea:focus{
+  border-color:#31506a; box-shadow:0 0 0 3px rgba(49,80,106,.25);
+}
+.row-2{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.row-4{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+textarea{ resize:vertical; }
+
+/* ===== Buttons ===== */
+.buttons{ display:flex; gap:10px; margin:6px 0 16px; }
+.btn{
+  appearance:none; border:0; border-radius:8px; color:#fff;
+  padding:10px 14px; font-weight:700; cursor:pointer;
+  transition: transform .04s ease, filter .12s ease;
+}
+.btn:active{ transform: translateY(1px); }
+.btn:focus { outline:3px solid rgba(255,255,255,.2); }
+.btn-blue{ background:var(--blue); }
+.btn-green{ background:var(--green); }
+.btn-amber{ background:var(--amber); color:#1a1300; }
+.btn-mini{
+  background:#263a4c; color:#eaf2fb; border:1px solid #2f455a; border-radius:8px;
+  padding:6px 10px; font-size:12px; cursor:pointer;
+}
+.btn-mini:hover{ filter:brightness(1.1); }
+
+/* ===== Card ===== */
+.card{
+  background:var(--card-bg); color:var(--card-text);
+  border-radius:12px; padding:16px; width:360px;
+  box-shadow:0 8px 28px rgba(0,0,0,.35);
+  border:3px solid transparent;
+}
+.card-status{ margin-top:8px; font-size:13px; color:#2b3a46; }
+
+/* Highlight when logs fetched */
+.card--highlight{
+  box-shadow:0 0 0 2px var(--amber) inset, 0 10px 32px rgba(0,0,0,.4);
+}
+
+/* University header */
+.uni{ display:flex; align-items:flex-start; gap:var(--uni-gap); margin-bottom:10px; }
+.uni-logo{ width:var(--uni-logo); height:auto; object-fit:contain; display:block; }
+.uni-text{ line-height:1.05; margin-top:2px; }
+.uni-line{ color:#000; letter-spacing:.2px; font-weight:900; font-size:var(--uni-size); }
+.uni-small{} .uni-large{}
+
+.photo{
+  margin-left:auto; width:88px; height:88px;
+  border-radius:8px; object-fit:cover; box-shadow:0 2px 8px rgba(0,0,0,.25);
+}
+
+.name-row{ display:flex; align-items:center; gap:10px; margin:10px 0 8px; }
+.name{ font-weight:900; font-size:17px; }
+
+/* Badge styles */
+.badge{
+  border-radius:8px; padding:6px 10px; font-weight:800; font-size:12.5px;
+  transition: background-color .25s ease, color .25s ease, transform .2s ease;
+}
+.badge-neutral{ background:var(--badge-bg); color:#161200; }
+.badge--ok     { background:#16a34a; color:#012312; }
+.badge--warn   { background:#f59e0b; color:#1a1300; }
+.badge--danger { background:var(--red);  color:#fff; }
+/* NEW: consent badge */
+.badge--consent{ background:var(--blue); color:#f9fbff; }
+
+/* Mini chart (optional, if you add it later) */
+.mini-dash { margin-top:18px; background:#0f1a23; border:1px solid #243546; border-radius:10px; padding:12px; }
+.mini-dash h3{ margin:0 0 8px; font-size:15px; font-weight:800; color:#dfe9f3; }
+.mini-dash .mini-dash-actions{ display:flex; justify-content:flex-end; margin-bottom:4px; }
+.chart{ width:100%; height:120px; display:block; }
+.chart-legend{ display:flex; gap:16px; font-size:12px; color:#9fb0c1; margin-top:6px; }
+.legend-dot{ display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:6px; vertical-align:middle; }
+.dot-ok{ background:#10b981; }
+.dot-warn{ background:#f59e0b; }
+.dot-danger{ background:#ef4444; }
+
+/* Toast notification */
+.toast{
+  position:fixed;
+  right:16px;
+  bottom:16px;
+  background:#0f1a23;
+  color:#e9eff7;
+  padding:10px 14px;
+  border-radius:8px;
+  box-shadow:0 6px 18px rgba(0,0,0,.4);
+  font-size:13px;
+  opacity:0;
+  pointer-events:none;
+  transform:translateY(8px);
+  transition: opacity .25s ease, transform .25s ease;
+}
+.toast--visible{
+  opacity:1;
+  transform:translateY(0);
+}
+
+@media (max-width: 1020px){
+  .grid{ grid-template-columns: 1fr; }
+  .card{ width:100%; }
+}
+@media (max-width: 380px){
+  :root{ --uni-logo:70px; --uni-size:16px; --uni-gap:10px; }
+
+  .hero-logo-circle img {
+  display: block;
+  width: auto;
+  height: 56px;      /* adjust if you want it smaller/bigger */
+  object-fit: contain;
+}
+.logo-pill {
+  width: 54px;
+  height: 54px;
+  border-radius: 15px;
+  border: 1px solid #1f2937;
+  background: radial-gradient(circle at top, #111827 0, #020617 65%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  letter-spacing: 0.03em;
+  color: #e5e7eb;
+  text-align: center;
+  font-weight: 600;
+}
+.logo-pill {
+  width: 54px;
+  height: 54px;
+  border-radius: 15px;
+  border: 1px solid #1f2937;
+  background: radial-gradient(circle at top, #111827 0, #020617 65%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  letter-spacing: 0.03em;
+  color: #e5e7eb;
+  text-align: center;
+  font-weight: 600;
+}
+
+.logo-pill {
+  width: 60px;
+  height: 62px;
+  border-radius: 15px;
+  border: 1px solid #1f2937;
+  background: radial-gradient(circle at top, #111827 0, #020617 65%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  letter-spacing: 0.03em;
+  color: #e5e7eb;
+  text-align: center;
+  font-weight: 600;
+}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+

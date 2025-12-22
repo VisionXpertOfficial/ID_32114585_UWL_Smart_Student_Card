@@ -1,0 +1,19 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Gateway: Run (8099)",
+      "program": "${workspaceFolder}/blockchain/gateway_server/server.js",
+      "cwd": "${workspaceFolder}/blockchain/gateway_server",
+      "env": { "PORT": "8099", "AI_API": "http://localhost:5051" },
+      "console": "integratedTerminal",
+      "skipFiles": ["<node_internals>/**"]
+    }
+  ]
+}
+
+
+
+

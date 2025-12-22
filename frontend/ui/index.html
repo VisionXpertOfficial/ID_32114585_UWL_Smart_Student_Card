@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>UWL Smart Student Card</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="page">
+    <h1>UWL Smart Student Card</h1>
+
+    <div class="grid">
+      <!-- LEFT: form -->
+      <section class="panel">
+
+        <!-- ✅ NEW STUDENT ID SECTION WITH LOAD BUTTON -->
+        <div class="form-row">
+          <label for="studentIdInput">Student ID</label>
+          <div class="id-with-button">
+            <input id="studentIdInput" type="text" placeholder="Enter Student ID" />
+            <button id="loadStudentBtn" type="button">Load</button>
+          </div>
+        </div>
+        <!-- END STUDENT ID SECTION -->
+
+        <div class="row-2">
+          <div class="form-row">
+            <label for="first_name">First name(s)</label>
+            <input id="first_name" type="text" value="MOHAMMED SULEMAN" />
+          </div>
+          <div class="form-row">
+            <label for="surname">Surname</label>
+            <input id="surname" type="text" value="MIAH" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label for="course">Course</label>
+          <input id="course" type="text" value="Computer Science" />
+        </div>
+
+        <div class="row-2">
+          <div class="form-row">
+            <label for="valid_from">Valid from</label>
+            <input id="valid_from" type="date" />
+          </div>
+          <div class="form-row">
+            <label for="valid_to">Valid to</label>
+            <input id="valid_to" type="date" />
+          </div>
+        </div>
+
+        <div class="row-4">
+          <div class="form-row">
+            <label for="hour">hour</label>
+            <input id="hour" type="number" value="9" />
+          </div>
+          <div class="form-row">
+            <label for="dist_km">dist_km</label>
+            <input id="dist_km" type="number" value="3" />
+          </div>
+          <div class="form-row">
+            <label for="fail_cnt">fail_cnt</label>
+            <input id="fail_cnt" type="number" value="0" />
+          </div>
+          <div class="form-row">
+            <label for="device_change">device_change</label>
+            <input id="device_change" type="number" value="1" />
+          </div>
+        </div>
+
+        <div class="buttons">
+          <button id="btn-consent" class="btn btn-blue" type="button">Set consent (true)</button>
+          <button id="btn-verify"  class="btn btn-green" type="button">Verify with AI</button>
+          <button id="btn-logs"    class="btn btn-amber" type="button">Fetch logs</button>
+        </div>
+
+        <div class="buttons">
+          <button id="btn-reset-history" class="btn btn-amber" type="button">Reset card</button>
+        </div>
+
+        <div class="form-row">
+          <label>Result / Logs</label>
+          <textarea id="logs" rows="8" spellcheck="false"></textarea>
+        </div>
+      </section>
+
+      <!-- RIGHT: card preview -->
+      <section class="panel">
+        <h2>Card Preview</h2>
+
+        <div class="card">
+          <div class="uni">
+            <img src="assets/uwl_logo.png" alt="University of West London logo" class="uni-logo" />
+            <div class="uni-text">
+              <div class="uni-line uni-small">UNIVERSITY OF</div>
+              <div class="uni-line uni-large">WEST LONDON</div>
+            </div>
+            <img src="assets/student_photo.png" alt="Student photo" class="photo" />
+          </div>
+
+          <div class="name-row">
+            <div id="card_name" class="name">MOHAMMED SULEMAN MIAH</div>
+            <span class="badge badge-neutral">Student</span>
+          </div>
+
+          <div class="meta">
+            <div><span class="label">ID No:</span> <span id="card_id">32114585</span></div>
+            <div><span class="label">Course:</span> <span id="card_course">Computer Science</span></div>
+            <div><span class="label">Valid:</span> <span id="card_valid">2025-10-06 — 2026-10-06</span></div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+  <script src="student_loader.js"></script> <!-- ✅ ADD THIS -->
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

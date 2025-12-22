@@ -1,0 +1,15 @@
+# Very big dataset – keep only on local machine
+backend/ai/data/elliptic_bitcoin_dataset/
+
+# Git installer – no need in repo
+Git-2.52.0-64-bit.exe
+
+# Don’t commit dependencies or compiled files
+node_modules/
+blockchain/gateway_server/node_modules/
+idnet-32114585/node_modules/
+
+__pycache__/
+*.pyc
+*.pkl
+*.joblib

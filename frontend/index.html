@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>UWL Smart Student Card – AI Face Recognition</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #020617;
+      --bg-soft: #020617;
+      --card: #020617;
+      --card-soft: #020617;
+      --border-soft: #111827;
+      --accent: #22c55e;
+      --accent-soft: rgba(34, 197, 94, 0.12);
+      --accent-strong: #16a34a;
+      --text-main: #e5e7eb;
+      --text-soft: #9ca3af;
+      --text-muted: #6b7280;
+      --pill-bg: #020617;
+      --pill-border: #1f2937;
+      --shadow-soft: 0 24px 80px rgba(0, 0, 0, 0.65);
+      --radius-xl: 26px;
+      --radius-card: 32px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left, #111827 0, #020617 45%)
+        fixed;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 16px;
+    }
+
+    .shell {
+      width: 100%;
+      max-width: 1200px;
+      border-radius: var(--radius-card);
+      background: radial-gradient(circle at top left, #020617 0, #020617 40%)
+          padding-box,
+        linear-gradient(135deg, #22c55e33, #38bdf833) border-box;
+      border: 1px solid transparent;
+      box-shadow: var(--shadow-soft);
+      padding: 32px 32px 28px;
+      display: grid;
+      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.4fr);
+      gap: 32px;
+    }
+
+    @media (max-width: 900px) {
+      .shell {
+        grid-template-columns: minmax(0, 1fr);
+        padding: 22px 18px 20px;
+        border-radius: 20px;
+      }
+    }
+
+    .brand-row {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .logo-pill {
+      width: 90px;        /* slightly smaller size */
+      height: 90px;
+      border-radius: 26px;
+      padding: 6px;
+      background: radial-gradient(circle at top, #020617 0, #020617 65%);
+      border: 1px solid #1f2937;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-img {
+      width: 102px;        /* logo image size */
+      height: 85px;
+      border-radius: 22px;
+      display: block;
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .brand-line {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: #9ca3af;
+    }
+
+    .brand-main {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: #6b7280;
+    }
+
+    h1 {
+      margin: 0 0 16px;
+      font-size: 30px;
+      line-height: 1.15;
+      letter-spacing: 0.03em;
+    }
+
+    h1 span {
+      color: var(--accent);
+      display: block;
+      font-weight: 650;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .chip {
+      border-radius: 999px;
+      padding: 6px 13px 7px;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      border: 1px solid var(--pill-border);
+      background: var(--pill-bg);
+      color: #9ca3af;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .chip::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.15);
+    }
+
+    .lead {
+      margin: 0 0 24px;
+      font-size: 14px;
+      color: var(--text-soft);
+      max-width: 520px;
+    }
+
+    .buttons-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .btn-primary {
+      border-radius: 999px;
+      padding: 12px 22px;
+      font-size: 14px;
+      font-weight: 600;
+      border: none;
+      background: radial-gradient(circle at top left, #4ade80, #22c55e);
+      color: #020617;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      box-shadow: 0 14px 35px rgba(34, 197, 94, 0.55);
+      transition: transform 0.12s ease, box-shadow 0.12s ease,
+        filter 0.12s ease;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+      box-shadow: 0 18px 45px rgba(34, 197, 94, 0.6);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+      box-shadow: 0 10px 25px rgba(34, 197, 94, 0.5);
+    }
+
+    .btn-primary-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      background: #022c22;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: #22c55e;
+    }
+
+    .muted-row {
+      margin-top: 14px;
+      font-size: 11px;
+      color: #6b7280;
+    }
+
+    .muted-row strong {
+      color: #9ca3af;
+      font-weight: 600;
+    }
+
+    /* Right column – snapshot */
+    .snapshot {
+      border-radius: 26px;
+      background: radial-gradient(circle at top, #020617, #020617 55%);
+      border: 1px solid #111827;
+      padding: 18px 18px 18px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .snapshot-header {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: #6b7280;
+      margin-bottom: 12px;
+    }
+
+    .snapshot-card {
+      border-radius: 20px;
+      background: radial-gradient(circle at top left, #020617, #020617 55%);
+      border: 1px solid #111827;
+      padding: 16px 16px 16px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) auto;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .snapshot-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: #9ca3af;
+      margin-bottom: 6px;
+    }
+
+    .snapshot-name {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .snapshot-meta {
+      font-size: 12px;
+      color: #9ca3af;
+      line-height: 1.55;
+    }
+
+    .snapshot-face {
+      width: 82px;
+      height: 82px;
+      border-radius: 22px;
+      border: 1px solid #1f2937;
+      background: radial-gradient(circle at top left, #1f2937, #020617 70%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #9ca3af;
+      font-size: 11px;
+      text-align: center;
+    }
+
+    .snapshot-footer {
+      margin-top: 14px;
+      font-size: 11px;
+      color: #6b7280;
+      line-height: 1.6;
+      padding-left: 16px;
+      position: relative;
+    }
+
+    .snapshot-footer::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 7px;
+      width: 7px;
+      height: 22px;
+      border-radius: 999px;
+      background: linear-gradient(to bottom, #22c55e, #16a34a);
+      box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.18);
+    }
+
+    .snapshot-footer strong {
+      color: #9ca3af;
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <!-- LEFT: intro + launch -->
+    <section>
+      <div class="brand-row">
+        <div class="logo-pill">
+          <img
+            src="ui/assets/uwl_logo.png"
+            alt="University of West London logo"
+            class="logo-img"
+          />
+        </div>
+        <div class="brand-text">
+          <div class="brand-line">UNIVERSITY OF WEST LONDON</div>
+          <div class="brand-main">SMART ID · STUDENT ACCESS SYSTEM</div>
+        </div>
+      </div>
+
+      <h1>
+        UWL Smart Student Card
+        <span>AI Face Recognition</span>
+      </h1>
+
+      <div class="chips">
+        <div class="chip">AI verification</div>
+        <div class="chip">Face recognition</div>
+        <div class="chip">Blockchain gateway (8099)</div>
+      </div>
+
+      
+
+      <div class="buttons-row">
+        <button class="btn-primary" onclick="openSmartCard()">
+          <span class="btn-primary-icon">▶</span>
+          <span>Launch AI Smart Card</span>
+        </button>
+      </div>
+
+      <div class="muted-row">
+        Gateway:
+        <strong>Node server on port 8099</strong> ·
+        Flask AI API on
+        <strong>http://localhost:5000</strong>
+      </div>
+    </section>
+
+    <!-- RIGHT: small static preview card -->
+    <aside class="snapshot">
+      <div class="snapshot-header">Snapshot</div> 
+
+      <div class="snapshot-card">
+        <div>
+          <div class="snapshot-title">University of West London</div>
+          <div class="snapshot-name">Sample Student</div>
+          <div class="snapshot-meta">
+            ID No: 32000025<br />
+            Course: Computer Science<br />
+            Status: Awaiting AI verification
+          </div>
+        </div>
+        <div class="snapshot-face">
+          Face preview
+        </div>
+      </div>
+
+      
+    </aside>
+  </main>
+
+  <script>
+    function openSmartCard() {
+      // Opens your existing smart card UI at /frontend/ui/index.html
+      window.location.href = "ui/";
+    }
+  </script>
+</body>
+</html>
+
+
+
