@@ -37,6 +37,7 @@
         fixed;
       color: var(--text-main);
       display: flex;
+      flex-direction: column;       /* allow main + footer stacked */
       align-items: center;
       justify-content: center;
       padding: 32px 16px;
@@ -306,6 +307,75 @@
     .snapshot-footer strong {
       color: #9ca3af;
     }
+
+    /* ===== Footer ===== */
+    .site-footer {
+      margin-top: 24px;
+      width: 100%;
+      max-width: 1200px;
+      padding: 1.2rem 1.8rem;
+      background: #020617;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+
+    .site-footer__brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .site-footer__logo-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 12px rgba(34, 197, 94, 0.8);
+    }
+
+    .site-footer__text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .site-footer__title {
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    .site-footer__subtitle {
+      opacity: 0.75;
+    }
+
+    .site-footer__links {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.75rem 1.5rem;
+    }
+
+    .site-footer__links a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      font-size: 0.8rem;
+    }
+
+    .site-footer__links a:hover {
+      color: #22c55e;
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      .site-footer {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
   </style>
 </head>
 <body>
@@ -336,8 +406,6 @@
         <div class="chip">Face recognition</div>
         <div class="chip">Blockchain gateway (8099)</div>
       </div>
-
-      
 
       <div class="buttons-row">
         <button class="btn-primary" onclick="openSmartCard()">
@@ -372,10 +440,27 @@
           Face preview
         </div>
       </div>
-
-      
     </aside>
   </main>
+
+  <!-- ===== Footer ===== -->
+  <footer class="site-footer">
+    <div class="site-footer__brand">
+      <span class="site-footer__logo-dot"></span>
+      <div class="site-footer__text">
+        <span class="site-footer__title">UWL Smart Student Card</span>
+        <span class="site-footer__subtitle">Powered by Vision_Xpert Official</span>
+      </div>
+    </div>
+
+    <nav class="site-footer__links">
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms &amp; Conditions</a>
+    </nav>
+  </footer>
+  <!-- ===== End Footer ===== -->
 
   <script>
     function openSmartCard() {
@@ -385,6 +470,7 @@
   </script>
 </body>
 </html>
+
 
 
 

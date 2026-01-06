@@ -4,16 +4,12 @@
 // and tells us if the photo matches the selected student.
 
 // === Config ===
-const STUDENTS_DATA_URL = "assets/students_50.json";          // JSON with 50 students
+const STUDENTS_DATA_URL = "assets/students_50.json";      // JSON with 50 students
 const FACE_API_URL      = "http://127.0.0.1:5000/face-match"; // Flask face-match endpoint
 
 // In-memory data
 let STUDENTS_LIST = [];
 let STUDENTS_BY_ID = {};
-
-// Currently loaded student + their card photo filename
-window.currentStudent = null;
-window.currentStudentPhotoFilename = null;
 
 // ---- Small helpers ------------------------------------------------------
 
@@ -44,7 +40,7 @@ async function loadStudentsDataset() {
     STUDENTS_LIST = Array.isArray(data) ? data : [];
     STUDENTS_BY_ID = {};
 
-    STUDENTS_LIST.forEach((s) => {
+    STUDENTS_LIST.forEach(s => {
       if (s.student_id) {
         STUDENTS_BY_ID[String(s.student_id)] = s;
       }
@@ -77,18 +73,16 @@ function findStudentByInput(raw) {
   const normName = lower.replace(/_/g, " ").replace(/\s+/g, " ").trim();
 
   // Prefer exact "first_name surname"
-  let match = STUDENTS_LIST.find(
-    (s) =>
-      `${(s.first_name || "").toLowerCase()} ${(s.surname || "").toLowerCase()}`
-        .trim() === normName
+  let match = STUDENTS_LIST.find(s =>
+    `${(s.first_name || "").toLowerCase()} ${(s.surname || "").toLowerCase()}`
+      .trim() === normName
   );
   if (match) return match;
 
   // Fallback: match by first name OR surname only
-  match = STUDENTS_LIST.find(
-    (s) =>
-      (s.first_name || "").toLowerCase() === normName ||
-      (s.surname || "").toLowerCase() === normName
+  match = STUDENTS_LIST.find(s =>
+    (s.first_name || "").toLowerCase() === normName ||
+    (s.surname || "").toLowerCase() === normName
   );
 
   return match || null;
@@ -97,16 +91,16 @@ function findStudentByInput(raw) {
 // ---- 3. Fill the left-side form -----------------------------------------
 
 function fillFormFromStudent(s) {
-  const idInput   = document.getElementById("studentIdInput");
-  const firstName = document.getElementById("first_name");
-  const surname   = document.getElementById("surname");
-  const course    = document.getElementById("course");
-  const validFrom = document.getElementById("valid_from");
-  const validTo   = document.getElementById("valid_to");
-  const hourEl    = document.getElementById("hour");
-  const distEl    = document.getElementById("dist_km");
-  const failEl    = document.getElementById("fail_cnt");
-  const deviceEl  = document.getElementById("device_change");
+  const idInput    = document.getElementById("studentIdInput");
+  const firstName  = document.getElementById("first_name");
+  const surname    = document.getElementById("surname");
+  const course     = document.getElementById("course");
+  const validFrom  = document.getElementById("valid_from");
+  const validTo    = document.getElementById("valid_to");
+  const hourEl     = document.getElementById("hour");
+  const distEl     = document.getElementById("dist_km");
+  const failEl     = document.getElementById("fail_cnt");
+  const deviceEl   = document.getElementById("device_change");
 
   if (idInput)   idInput.value   = s.student_id || "";
   if (firstName) firstName.value = s.first_name || "";
@@ -143,15 +137,8 @@ function updateCardPreview(s) {
   if (photoEl && s.student_id && s.first_name && s.surname) {
     const fileName = `${s.student_id}_${s.first_name}_${s.surname}`
       .replace(/\s+/g, "_") + ".png";
-
-    const path = `assets/${fileName}`;
-    photoEl.src = path;
+    photoEl.src = `assets/${fileName}`;
     photoEl.alt = `Photo of ${fullName || "student"}`;
-
-    // expose the filename to app.js and logs
-    window.currentStudentPhotoFilename = fileName;
-  } else {
-    window.currentStudentPhotoFilename = null;
   }
 }
 
@@ -191,7 +178,7 @@ async function runFaceMatchForStudent(s) {
       return;
     }
 
-    const matched   = data.student;
+    const matched = data.student;
     const matchedId = String(matched.student_id || matched.id || "");
     const currentId = String(s.student_id || "");
     const distance  = typeof data.distance !== "undefined"
@@ -241,8 +228,6 @@ async function onLoadClicked() {
   if (!student) {
     alert(`No student found for "${raw}". Try numeric ID (e.g. 32000025) or full name.`);
     uiLog(`[WARN] No student found for search: "${raw}".`);
-    window.currentStudent = null;
-    window.currentStudentPhotoFilename = null;
     return;
   }
 
@@ -251,14 +236,12 @@ async function onLoadClicked() {
     `(${student.first_name} ${student.surname}) using search "${raw}".`
   );
 
-  // remember globally for app.js / logs
-  window.currentStudent = student;
-
   // Update UI
   fillFormFromStudent(student);
   updateCardPreview(student);
 
-  // AI check on load (optional)
+  // *** IMPORTANT: AI now loops through ALL stored faces automatically
+  // via the backend, and we show toast "Match Found" / "No Match Found".
   await runFaceMatchForStudent(student);
 }
 
